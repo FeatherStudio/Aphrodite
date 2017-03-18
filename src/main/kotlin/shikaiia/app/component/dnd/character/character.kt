@@ -31,6 +31,7 @@ open class BaseCharacterAttribute {
     fun total() = str + dex + con + int + wis + cha
 
     fun getAttrList() = attrList
+    fun getByIndex(i: Int) = attrList[i]
 
     fun lowerAll(v: Int) {
         fun Int.lower(value: Int) = this - v
@@ -64,7 +65,7 @@ Cha: $cha""")
 
     operator fun plus(other: BaseCharacterAttribute): BaseCharacterAttribute {
         val new = BaseCharacterAttribute()
-        new.attrList = this.attrList.mapIndexed { index, it-> it+other.attrList[index] }.toIntArray()
+        new.attrList = this.attrList.mapIndexed { index, it -> it + other.attrList[index] }.toIntArray()
         return new
     }
 }
@@ -85,6 +86,8 @@ fun randomPointCharacter(range: () -> Int): BaseCharacterAttribute {
 }
 
 fun randomFixedTotalPointCharacter(points: Int = 60): BaseCharacterAttribute {
+    // fixme $data.lowerAll may cause negative value
+    // fixme use DND type attr rule
     val data = randomPointCharacter()
     var delta = data.total() - points
 
@@ -95,9 +98,14 @@ fun randomFixedTotalPointCharacter(points: Int = 60): BaseCharacterAttribute {
     data.lowerAll(div)
 
     while (delta != 0) {
-        val it = randomTo(6)
+        var it = randomTo(6)
         fun Int.decr() = this - 1
         fun Int.incr() = this + 1
+
+        while (data.getByIndex(it - 1) <= 1) {
+            it = randomTo(6)
+        }
+
         data.applyByIndex(it - 1, if (delta > 0) Int::decr else Int::incr)
         delta += if (delta > 0) -1 else 1
     }
@@ -107,6 +115,9 @@ fun randomFixedTotalPointCharacter(points: Int = 60): BaseCharacterAttribute {
 
 fun randomCharacter(points: Int = 30): BaseCharacterAttribute {
     val data = BaseCharacterAttribute()
-    data.lowerAll(5)
-    return data + randomFixedTotalPointCharacter(points)
+    data.lowerAll(2)
+    val adjust = randomFixedTotalPointCharacter(points)
+    adjust.print()
+    println("----")
+    return data + adjust
 }

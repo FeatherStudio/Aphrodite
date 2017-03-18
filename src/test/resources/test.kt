@@ -1,3 +1,5 @@
+package uselessTest
+
 import junit.framework.TestCase.assertEquals
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context

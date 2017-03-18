@@ -1,6 +1,7 @@
 package app.component.dnd
 
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
@@ -22,9 +23,9 @@ object CharacterSpec : Spek({
 //                data.print()
 //                println("===")
             })
-            repeat(10, {
+            repeat(2, {
                 val data = randomCharacter()
-                assertEquals(data.total(), 60)
+                assertEquals(data.total(), 78)
                 data.print()
                 println("===")
             })
@@ -33,7 +34,7 @@ object CharacterSpec : Spek({
         it("should be 9 after lower all by 1"){
             val data = BaseCharacterAttribute()
             data.lowerAll(1)
-            data.getAttrList().forEach { assertEquals(it, 9) }
+            data.getAttrList().forEach { assertEquals(it, 9);  assertTrue("attr should greater than 5", it >= 5)}
         }
 
     }

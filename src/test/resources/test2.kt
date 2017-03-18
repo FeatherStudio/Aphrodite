@@ -1,3 +1,5 @@
+package uselessTest
+
 import junit.framework.TestCase
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.subject.SubjectSpek
