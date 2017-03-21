@@ -3,6 +3,15 @@ package shikaiia.app.component.dnd.character
 import shikaiia.app.component.dnd.resources.*
 import shikaiia.extension.public.noHigherThan
 
+// Array< (attrs, desc) >
+typealias WithDesc<T> = Pair<T, String>
+typealias Adjusts<T> = Array<WithDesc<T>>
+typealias AttrAdjusts = Adjusts<AttributeSet>
+typealias TimesAdjusts = Adjusts<Int> // 倍数
+fun <T> emptyAdjust(): Adjusts<T> {
+    return arrayOf<WithDesc<T>>()
+}
+
 open class AttributeSet() {
     constructor(attr: IntArray) : this() {
         this.attrList = attr
@@ -39,6 +48,17 @@ open class AttributeSet() {
         return new
     }
 
+    fun getByName(name: String): Int {
+        return when (name) {
+            Str -> str
+            Dex -> dex
+            Con -> con
+            Inte -> int
+            Wis -> wis
+            Cha -> cha
+            else -> -1
+        }
+    }
 }
 
 open class BaseCharacterAttribute(val max: Int = 30) {
@@ -73,7 +93,7 @@ open class BaseCharacterAttribute(val max: Int = 30) {
     fun total() = attrSet.attrList.sum()
     fun getAttrList() = attrSet.attrList
     fun getByIndex(i: Int) = attrSet.attrList[i]
-    fun getByType(s: String) = attrSet.attrList[getIndexByAttrType(s)]
+    fun getByName(s: String) = attrSet.attrList[getIndexByAttrType(s)]
 
     fun lowerAll(v: Int): BaseCharacterAttribute {
         applyAll { minus(v) }
@@ -140,4 +160,6 @@ $Cha: $cha""")
 
 open class BasePlayerAttribute : BaseCharacterAttribute(20)
 
-val ZeroAttrSet : AttributeSet = AttributeSet()
+val ZeroAttrSet: AttributeSet = AttributeSet()
+
+fun Int.modifier(): Int = ((this - 10) / 2)

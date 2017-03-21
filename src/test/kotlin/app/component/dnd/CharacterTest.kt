@@ -8,7 +8,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
 import shikaiia.app.component.dnd.character.BaseCharacterAttribute
-import shikaiia.app.component.dnd.character.randomCharacter
+import shikaiia.app.component.dnd.character.randomAttribute
 import shikaiia.extension.public.repeat
 
 
@@ -17,7 +17,7 @@ object CharacterSpec : Spek({
     describe("a group") {
         it("should random generate some attributes set") {
             repeat(2, {
-                val data = randomCharacter()
+                val data = randomAttribute()
 //                data.print()
                 assertEquals(80, data.totalConsume())
 //                println("===")
