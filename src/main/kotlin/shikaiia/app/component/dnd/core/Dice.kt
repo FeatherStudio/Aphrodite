@@ -1,5 +1,10 @@
 package shikaiia.app.component.dnd.core
 
+import shikaiia.app.component.dnd.character.Fighter
+import shikaiia.app.component.dnd.resources.ClericName
+import shikaiia.app.component.dnd.resources.FighterName
+import shikaiia.app.component.dnd.resources.MageName
+import shikaiia.app.component.dnd.resources.ThiefName
 import shikaiia.extension.randomize
 
 class Dice(val values: IntArray) {
@@ -39,10 +44,10 @@ fun randomRange(from: Int, to: Int) = Dice(from..to).dice()
 
 fun getHpDice(cls: String): Dice {
     return when (cls) {
-        "Fighter" -> dice10
-        "Mage" -> dice6
-        "Cleric" -> dice8
-        "Thief" -> dice6
+        FighterName -> dice10
+        MageName -> dice6
+        ClericName -> dice8
+        ThiefName -> dice6
         else -> dice4
     }
 }

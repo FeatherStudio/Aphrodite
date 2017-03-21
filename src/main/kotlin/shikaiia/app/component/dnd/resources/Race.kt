@@ -1,0 +1,15 @@
+package shikaiia.app.component.dnd.resources
+
+const val DwarfDesc = ""
+const val HillDwarfDesc = ""
+const val ElfDesc = ""
+const val HighElfDesc = ""
+const val HalflingDesc = ""
+const val LightfootDesc = ""
+const val DragonbornDesc = ""
+const val HumanDesc = ""
+const val GnomeDesc = ""
+const val RockGnomeDesc = ""
+const val HalfElfDesc = ""
+const val HalfOrcDesc = ""
+const val TieflingDesc = ""

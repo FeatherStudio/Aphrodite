@@ -2,6 +2,55 @@ package shikaiia.app.component.dnd.character
 
 // Weapon
 
+open class BaseEquipment
+open class BaseWeapen : BaseEquipment()
+open class BaseArmor : BaseEquipment()
+
+typealias Equipments = Array<BaseEquipment?>
+
+class EquipmentSet {
+    private var equipments: Equipments =
+            arrayOf(null, null, null, null, null, null,
+                    null, null, null, null, null, null)
+    var head get() = equipments[0]; set(value) {
+        equipments[0] = value
+    }
+    var body get() = equipments[1]; set(value) {
+        equipments[1] = value
+    }
+    var leg get() = equipments[2]; set(value) {
+        equipments[2] = value
+    }
+    var foot get() = equipments[3]; set(value) {
+        equipments[3] = value
+    }
+    var cloak get() = equipments[4]; set(value) {
+        equipments[4] = value
+    }
+    var belt get() = equipments[5]; set(value) {
+        equipments[5] = value
+    }
+    var leftHand get() = equipments[6]; set(value) {
+        equipments[6] = value
+    }
+    var rightHand get() = equipments[7]; set(value) {
+        equipments[7] = value
+    }
+    var bracelet get() = equipments[8]; set(value) {
+        equipments[8] = value
+    }
+    var necklace get() = equipments[9]; set(value) {
+        equipments[9] = value
+    }
+    var ring1 get() = equipments[10]; set(value) {
+        equipments[10] = value
+    }
+    var ring2 get() = equipments[11]; set(value) {
+        equipments[11] = value
+    }
+
+}
+
 class ProficiencySet {
 
     private var attrList: IntArray = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)

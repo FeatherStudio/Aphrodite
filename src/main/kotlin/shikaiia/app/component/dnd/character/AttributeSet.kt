@@ -139,3 +139,5 @@ $Cha: $cha""")
 }
 
 open class BasePlayerAttribute : BaseCharacterAttribute(20)
+
+val ZeroAttrSet : AttributeSet = AttributeSet()

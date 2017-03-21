@@ -26,7 +26,7 @@ fun randomFixedTotalPointCharacter(points: Int = 80): BaseCharacterAttribute {
 }
 
 fun randomFixedTotalPointCharacter(points: Int = 80, randomFunc: () -> Int,
-                                   base: BaseCharacterAttribute = ZeroAttrSet): BaseCharacterAttribute {
+                                   base: BaseCharacterAttribute = ZeroAttr): BaseCharacterAttribute {
     var remain = points
     val data = base
 
@@ -68,4 +68,4 @@ fun randomCharacter(points: Int = 32): BaseCharacterAttribute {
     return adjust
 }
 
-val ZeroAttrSet: BaseCharacterAttribute = BaseCharacterAttribute().lowerAll(10)
+val ZeroAttr: BaseCharacterAttribute = BaseCharacterAttribute().lowerAll(10)

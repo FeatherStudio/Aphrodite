@@ -1,45 +1,51 @@
 package shikaiia.app.component.dnd.character
 
-open class BaseRace(val desc: String = "",
+import shikaiia.app.component.dnd.resources.*
+
+open class BaseRace(var desc: String = "",
                     var adjust: AttributeSet = AttributeSet(),
                     var speed: Int = 25,
                     var skill: SkillList = emptySkill,
                     var freePoint: Int = 0)
 
-open class Dwarf : BaseRace("", AttributeSet(con = 2))
+open class Dwarf : BaseRace(DwarfDesc, AttributeSet(con = 2))
 class HillDwarf() : Dwarf() {
     init {
+        desc = HillDwarfDesc
         adjust += AttributeSet(wis = 1)
     }
 }
 
-open class Elf : BaseRace("", AttributeSet(dex = 2), 30)
+open class Elf : BaseRace(ElfDesc, AttributeSet(dex = 2), 30)
 class HighElf : Elf() {
     init {
+        desc = HighElfDesc
         adjust += AttributeSet(int = 1)
     }
 }
 
-open class Halfling : BaseRace("", AttributeSet(dex = 2))
+open class Halfling : BaseRace(HalflingDesc, AttributeSet(dex = 2))
 class Lightfoot : Halfling() {
     init {
+        desc = LightfootDesc
         adjust += AttributeSet(cha = 1)
     }
 }
 
-class Human : BaseRace("", AttributeSet(1, 1, 1, 1, 1, 1), 30)
+class Human : BaseRace(HumanDesc, AttributeSet(1, 1, 1, 1, 1, 1), 30)
 
-class Dragonborn : BaseRace("", AttributeSet(str = 2, cha = 1), 30)
+class Dragonborn : BaseRace(DragonbornDesc, AttributeSet(str = 2, cha = 1), 30)
 
-open class Gnome : BaseRace("", AttributeSet(int = 2))
+open class Gnome : BaseRace(GnomeDesc, AttributeSet(int = 2))
 class RockGnome : Gnome() {
     init {
+        desc = RockGnomeDesc
         adjust = AttributeSet(con = 1)
     }
 }
 
-class HalfElf : BaseRace("", AttributeSet(cha = 1), 30, freePoint = 2)
+class HalfElf : BaseRace(HalfElfDesc, AttributeSet(cha = 1), 30, freePoint = 2)
 
-class HalfOrc : BaseRace("", AttributeSet(str = 2, con = 1), 30)
+class HalfOrc : BaseRace(HalfOrcDesc, AttributeSet(str = 2, con = 1), 30)
 
-class Tiefling : BaseRace("", AttributeSet(int = 1, cha = 2), 30)
+class Tiefling : BaseRace(TieflingDesc, AttributeSet(int = 1, cha = 2), 30)
