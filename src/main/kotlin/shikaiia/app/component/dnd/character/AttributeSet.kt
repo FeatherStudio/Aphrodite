@@ -1,26 +1,29 @@
 package shikaiia.app.component.dnd.character
 
 import shikaiia.app.component.dnd.resources.*
-import shikaiia.extension.public.noHigherThan
 
 // Array< (attrs, desc) >
 typealias WithDesc<T> = Pair<T, String>
 typealias Adjusts<T> = Array<WithDesc<T>>
 typealias AttrAdjusts = Adjusts<AttributeSet>
 typealias TimesAdjusts = Adjusts<Int> // 倍数
-fun <T> emptyAdjust(): Adjusts<T> {
-    return arrayOf<WithDesc<T>>()
-}
+
+fun <T> emptyAdjust() = arrayOf<WithDesc<T>>()
+
+fun <K, V> emptyHashMap() = hashMapOf<K, V>()
+
+fun propertyOf(str: Int = 0, dex: Int = 0, con: Int = 0, int: Int = 0, wis: Int = 0, cha: Int = 0)
+        = arrayOf(Property(str), Property(dex), Property(con), Property(int), Property(wis), Property(cha))
 
 open class AttributeSet() {
-    constructor(attr: IntArray) : this() {
+    constructor(attr: Array<Property>) : this() {
         this.attrList = attr
     }
 
     constructor(str: Int = 0, dex: Int = 0, con: Int = 0, int: Int = 0, wis: Int = 0, cha: Int = 0) :
-            this(intArrayOf(str, dex, con, int, wis, cha))
+            this(propertyOf(str, dex, con, int, wis, cha))
 
-    var attrList: IntArray = intArrayOf(10, 10, 10, 10, 10, 10)
+    var attrList: Array<Property> = propertyOf(10, 10, 10, 10, 10, 10)
     // todo adjust list
     var str get() = attrList[0]; set(value) {
         attrList[0] = value
@@ -48,7 +51,7 @@ open class AttributeSet() {
         return new
     }
 
-    fun getByName(name: String): Int {
+    fun getByName(name: String): Property {
         return when (name) {
             Str -> str
             Dex -> dex
@@ -56,17 +59,25 @@ open class AttributeSet() {
             Inte -> int
             Wis -> wis
             Cha -> cha
-            else -> -1
+            else -> ZeroProperty
         }
     }
 }
 
+// Cannot cast Comparable<T> to T
+// <T> Comparable<T>.noHigherThan(max: T): T
+// cannot return this
+infix fun Property.noHigherThan(max: Property): Property {
+    if (this.value > max.value) return max
+    else return this
+}
+
 open class BaseCharacterAttribute(val max: Int = 30) {
-    constructor(attr: IntArray) : this() {
+    constructor(attr: Array<Property>) : this() {
         this.attrSet = AttributeSet(attr)
     }
 
-    private fun Int.lowerThanMax() = this.noHigherThan(max)
+    private fun Property.lowerThanMax() = this.noHigherThan(Property(max))
 
     var attrSet = AttributeSet()
 
@@ -90,7 +101,7 @@ open class BaseCharacterAttribute(val max: Int = 30) {
         attrSet.attrList[5] = value.lowerThanMax()
     }
 
-    fun total() = attrSet.attrList.sum()
+    fun total() = attrSet.attrList.sumBy { it.value }
     fun getAttrList() = attrSet.attrList
     fun getByIndex(i: Int) = attrSet.attrList[i]
     fun getByName(s: String) = attrSet.attrList[getIndexByAttrType(s)]
@@ -163,3 +174,5 @@ open class BasePlayerAttribute : BaseCharacterAttribute(20)
 val ZeroAttrSet: AttributeSet = AttributeSet()
 
 fun Int.modifier(): Int = ((this - 10) / 2)
+
+fun Int.movement(): Int = (this * 2) / 10

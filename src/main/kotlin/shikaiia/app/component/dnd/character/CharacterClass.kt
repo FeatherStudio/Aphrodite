@@ -14,7 +14,7 @@ open class BaseCharacterClass(val name: String, var adjust: AttributeSet = ZeroA
                               var save: SaveSet = SaveSet()) {
     val hpDice = getHpDice(name)
     fun firstLevelHp(attr: AttributeSet) = attr.con
-    fun levelUpHp(attr: AttributeSet) = hpDice.dice()
+    fun levelUpHp(attr: AttributeSet) = hpDice.dice() + attr.con.modifier()
 
 }
 

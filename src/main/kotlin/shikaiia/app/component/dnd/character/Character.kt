@@ -11,6 +11,7 @@ open class BaseCharacter(val race: BaseRace,
     fun getAbilityByName(name: String): Int {
         return ability.getByName(name)
     }
+
     fun getModifierByName(name: String): Int {
         return ability.modifier(name)
     }
@@ -20,6 +21,14 @@ open class BaseCharacter(val race: BaseRace,
 
 open class BasePlayer(race: BaseRace, characterClass: BaseCharacterClass, level: Int = 1,
                       ability: BasePlayerAttribute) : BaseCharacter(race, characterClass, level, ability) {
+
+    val movement: Int get() = race.speed.movement()
+    val carryingCapacity: Int get() = race.size / 8 * ability.str * 3 + ability.str % 10 * 4
+    val hp: Int get() = characterClass.firstLevelHp(ability.attrSet)
+    var currentHp = 0
+    val defenceLevel: Int = 0
+
+
     var abilityCheckAdjusts: Array<Pair<AttributeSet, String>> = emptyAdjust()
     var abilityCheckTimesAdjusts: TimesAdjusts = emptyAdjust()
     var saveCheckAdjusts: AttrAdjusts = emptyAdjust()
@@ -30,11 +39,11 @@ open class BasePlayer(race: BaseRace, characterClass: BaseCharacterClass, level:
         return player > target
     }
 
-    fun abilityCheck(type: String, target: Int): Boolean{
-        val value = abilityCheckAdjusts.fold(0, {acc, x -> acc + x.first.getByName(type)})
-        val times = abilityCheckTimesAdjusts.fold(0, {acc, x -> acc + x.first})
-        var result= 0
-        for (i in 0..times){
+    fun abilityCheck(type: String, target: Int): Boolean {
+        val value = abilityCheckAdjusts.fold(0, { acc, x -> acc + x.first.getByName(type) })
+        val times = abilityCheckTimesAdjusts.fold(0, { acc, x -> acc + x.first })
+        var result = 0
+        for (i in 0..times) {
             result += d20()
         }
         result += value * times

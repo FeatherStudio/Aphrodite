@@ -2,11 +2,25 @@ package shikaiia.app.component.dnd.character
 
 import shikaiia.app.component.dnd.resources.*
 
+typealias BodySize = Int
+const val BipedFine = 1 // 超微型
+const val BipedDiminutive = 2 // 微型
+const val BipedTiny = 4 // 超小型
+const val BipedSmall = 6 // 小型
+const val BipedMedium = 8 // 中型
+const val BipedLarge = 16 // 大型
+const val BipedHuge = 32 // 超大型
+const val BipedGargantuan = 64 // 巨型
+const val BipedColossal = 128 // 超巨型
+
+const val QuadrupedConstant = 1.5
+
 open class BaseRace(var desc: String = "",
                     var adjust: AttributeSet = AttributeSet(),
                     var speed: Int = 25,
                     var skill: SkillList = emptySkill,
-                    var freePoint: Int = 0)
+                    var freePoint: Int = 0,
+                    var size: BodySize = BipedMedium)
 
 open class Dwarf : BaseRace(DwarfDesc, AttributeSet(con = 2))
 class HillDwarf() : Dwarf() {
